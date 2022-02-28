@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css variables & js</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 62.5%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        :root {
+            --spacing: 25px;
+            --blur: 0px;
+            --color: #f2d621;
+
+            --footer-height: 50px;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        footer {
+            width: 100%;
+            height: var(--footer-height);
+            background-color: rgb(143, 143, 143);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.4rem;
+        }
+
+        footer a {
+            color: var(--color);
+        }
+
+        main {
+            width: 100%;
+            min-height: calc(100% - var(--footer-height));
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 50px;
+        }
+
+        label {
+            font-size: 2.6rem;
+        }
+
+        main h1 {
+            font-size: 5.6rem;
+            margin: 20px;
+        }
+
+        .colorize {
+            color: var(--color);
+        }
+
+        main img {
+            margin: 50px;
+            width: 860px;
+            padding: var(--spacing);
+            filter: blur(var(--blur));
+            background-color: var(--color);
+        }
+
+        .inputs {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input {
+            margin: 0 25px 0 5px;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            main img {
+                width: 90%;
+            }
+
+            .inputs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Update <span class="colorize">CSS</span> variables with <span class="colorize">JS</span></h1>
+        <div class="inputs">
+            <label for="spacing">Spacing</label>
+            <input name="spacing" type="range" min="0" max="50" class="input spacing-input" data-unit="px" value="25">
+            <label for="">Blur</label>
+            <input name="blur" type="range" min="0" max="50" class="input blur-input" data-unit="px" value="0">
+            <label for="color">Color</label>
+            <input name="color" type="color" class="input color-input" value="#f2d621">
+        </div>
+        <img src="https://images.unsplash.com/photo-1646062142799-73dd49cf315a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+            alt="">
+    </main>
+    <footer>
+        <p>By <a href="#">Manuel Peñaloza</a></p>
+    </footer>
+    <script>
+        // TODO: get the values of the inputs when the values changes
+        const inputs = document.querySelectorAll(".input");
+        inputs.forEach(input => input.addEventListener("input", updateValues))
+
+        function updateValues(e) {
+            let unit = e.srcElement.dataset.unit || "";
+            let value = e.srcElement.value;
+            let property = `--${this.name}`;
+            document.documentElement.style.setProperty(property, value + unit);
+        }
+        // when a value change call a function who acces tho the :root element and modify the variables like a property
+    </script>
+</body>
+</html>
